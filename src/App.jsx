@@ -1,18 +1,8 @@
-import {AddTaskForm} from './components/AddTaskForm';
-import {SearchTaskForm} from './components/SearchTaskForm';
-import TodoInfo from "./components/TodoInfo.jsx";
-import TodoList from "./components/TodoList.jsx";
+import Todo from "./components/Todo.jsx";
 
 const App = () => {
   return (
-    <div className='todo'>
-      <h1 className='todo__title'>To Do List</h1>
-      <AddTaskForm/>
-      <SearchTaskForm/>
-      <TodoInfo/>
-      <TodoList/>
-
-    </div>
+    <Todo/>
   );
 };
 
