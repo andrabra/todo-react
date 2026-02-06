@@ -1,16 +1,18 @@
 import React from 'react';
 
-export default function Field({ label, type }) {
+export default function Field(props) {
+  const { className = '', id, label, type = 'text' } = props;
   return (
-    <div className='todo__field field'>
-      <label className='field__label' htmlFor='new-task'>
-        New task
+    <div className={`field ${className}`}>
+      <label className='field__label' htmlFor={id}>
+        {label}
       </label>
       <input
         className='field__input'
-        id='new-task'
+        id={id}
         placeholder=' '
         autoComplete='off'
+        type={type}
       />
     </div>
   );
