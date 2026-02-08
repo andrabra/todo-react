@@ -25,7 +25,14 @@ const Todo = () => {
   };
 
   const toggleTaskComplete = (taskId, isDone) => {
-    console.log('toggle task with id', taskId, isDone);
+    setTasks(
+      tasks.map((task) => {
+        if (task.id === taskId) {
+          return { ...task, isDone };
+        }
+        return task;
+      }),
+    );
   };
 
   const filterTasks = (query) => {
