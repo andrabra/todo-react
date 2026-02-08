@@ -1,7 +1,7 @@
 import React from 'react';
 
 export default function Field(props) {
-  const { className = '', id, label, type = 'text', onInput } = props;
+  const { className = '', id, label, type = 'text', onInput, value } = props;
   return (
     <div className={`field ${className}`}>
       <label className='field__label' htmlFor={id}>
@@ -14,6 +14,7 @@ export default function Field(props) {
         placeholder=' '
         autoComplete='off'
         type={type}
+        value={value}
       />
     </div>
   );
