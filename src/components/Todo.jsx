@@ -10,16 +10,41 @@ const Todo = () => {
     { id: '3', title: 'Task 3', isDone: false },
   ];
 
+  const deleteAllTasks = () => {
+    console.log('delete');
+  };
+
+  const deleteTask = (taskId) => {
+    console.log('delete task with id', taskId);
+  };
+
+  const toggleTaskComplete = (taskId, isDone) => {
+    console.log('toggle task with id', taskId, isDone);
+  };
+
+  const filterTasks = (query) => {
+    console.log('search', query);
+  };
+
+  const addTask = () => {
+    console.log('add task');
+  };
+
   return (
     <div className='todo'>
       <h1 className='todo__title'>To Do List</h1>
-      <AddTaskForm />
-      <SearchTaskForm />
+      <AddTaskForm addTask={addTask} />
+      <SearchTaskForm onSearchInput={filterTasks} />
       <TodoInfo
         total={tasks.length}
         done={tasks.filter((task) => task.isDone).length}
+        onDeleteAllButtonClick={deleteAllTasks}
       />
-      <TodoList tasks={tasks} />
+      <TodoList
+        tasks={tasks}
+        onDeleteTaskButtonClick={deleteTask}
+        onTaskCompleteChange={toggleTaskComplete}
+      />
     </div>
   );
 };
