@@ -3,9 +3,11 @@ import TodoItem from './TodoItem.jsx';
 const TodoList = (props) => {
   const {
     tasks = [],
+    filteredTasks,
+    firstIncompleteTaskId,
+    firstIncompleteTaskRef,
     onDeleteTaskButtonClick,
     onTaskCompleteChange,
-    filteredTasks,
   } = props;
 
   const hasTasks = tasks.length > 0;
@@ -28,6 +30,9 @@ const TodoList = (props) => {
           key={task.id}
           title={task.title}
           isDone={task.isDone}
+          ref={
+            task.id === firstIncompleteTaskId ? firstIncompleteTaskRef : null
+          }
           onDeleteTaskButtonClick={onDeleteTaskButtonClick}
           onTaskCompleteChange={onTaskCompleteChange}
         />

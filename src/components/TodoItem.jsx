@@ -4,12 +4,13 @@ const TodoItem = (props) => {
     id,
     title,
     isDone,
+    ref,
     onDeleteTaskButtonClick,
     onTaskCompleteChange,
   } = props;
 
   return (
-    <li className={`todo-item ${className}`}>
+    <li className={`todo-item ${className}`} ref={ref}>
       <input
         onChange={(e) => onTaskCompleteChange(id, e.target.checked)}
         className='todo-item__checkbox'

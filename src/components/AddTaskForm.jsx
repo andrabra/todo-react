@@ -2,7 +2,7 @@ import Button from './Button';
 import Field from './Field';
 
 export const AddTaskForm = (props) => {
-  const { addTask, newTaskTitle, setNewTaskTitle } = props;
+  const { addTask, newTaskTitle, setNewTaskTitle, newTaskInputRef } = props;
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -19,6 +19,7 @@ export const AddTaskForm = (props) => {
         className='todo__field'
         id='new-task'
         label='New task title'
+        ref={newTaskInputRef}
         value={newTaskTitle}
         onInput={handleInputChange}
       />
