@@ -1,15 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { AddTaskForm } from './AddTaskForm.jsx';
 import { SearchTaskForm } from './SearchTaskForm.jsx';
 import TodoInfo from './TodoInfo.jsx';
 import TodoList from './TodoList.jsx';
 
 const Todo = () => {
-  const [tasks, setTasks] = useState([
-    { id: '1', title: 'Task 1', isDone: true },
-    { id: '2', title: 'Task 2', isDone: false },
-    { id: '3', title: 'Task 3', isDone: false },
-  ]);
+  const [tasks, setTasks] = useState(() => {
+    const storedTasks = localStorage.getItem('tasks');
+
+    if (storedTasks) {
+      return JSON.parse(storedTasks);
+    }
+
+    return [
+      { id: '1', title: 'Task 1', isDone: true },
+      { id: '2', title: 'Task 2', isDone: false },
+      { id: '3', title: 'Task 3', isDone: false },
+    ];
+  });
 
   const [newTaskTitle, setNewTaskTitle] = useState('');
 
@@ -50,6 +58,10 @@ const Todo = () => {
       setNewTaskTitle('');
     }
   };
+
+  useEffect(() => {
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+  }, [tasks]);
 
   return (
     <div className='todo'>
