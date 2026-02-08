@@ -21,7 +21,7 @@ const Todo = () => {
   };
 
   const deleteTask = (taskId) => {
-    console.log('delete task with id', taskId);
+    setTasks(tasks.filter((task) => task.id !== taskId));
   };
 
   const toggleTaskComplete = (taskId, isDone) => {
