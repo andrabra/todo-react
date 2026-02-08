@@ -1,9 +1,7 @@
-import Todo from "./components/Todo.jsx";
+import Todo from './components/Todo.jsx';
 
 const App = () => {
-  return (
-    <Todo/>
-  );
+  return <Todo />;
 };
 
 export default App;
