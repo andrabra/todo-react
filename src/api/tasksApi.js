@@ -27,6 +27,8 @@ const tasksApi = {
       headers,
       body: JSON.stringify({ isDone }),
     }).then(tasksApi.toJson),
+
+  getById: (taskId) => fetch(`${URL}/${taskId}`).then(tasksApi.toJson),
 };
 
 export default tasksApi;
