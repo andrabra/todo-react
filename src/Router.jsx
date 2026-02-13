@@ -1,4 +1,5 @@
 import { useRoute } from './hooks/useRoute';
+import NotFoundPage from './pages/NotFoundPage';
 
 const matchPath = (path, route) => {
   const pathParts = path.split('/');
@@ -34,7 +35,7 @@ const Router = (props) => {
     }
   }
 
-  const NotFoundPage = routes['*'];
+  // const NotFoundPage = routes['*'];
   return <NotFoundPage />;
 };
 
