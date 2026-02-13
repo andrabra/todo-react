@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import tasksApi from '../api/tasksApi';
+import NotFoundPage from './NotFoundPage';
 
 const TaskPage = (props) => {
   const { params } = props;
@@ -17,14 +18,14 @@ const TaskPage = (props) => {
       })
       .catch(setHasError)
       .finally(() => setIsLoading(false));
-  }, []);
+  }, [taskId]);
 
   if (isLoading) {
     return <div>Loading...</div>;
   }
 
   if (hasError) {
-    return <div>Something went wrong or Task not found</div>;
+    return <NotFoundPage />;
   }
 
   return (

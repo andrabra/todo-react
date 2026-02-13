@@ -1,12 +1,13 @@
 import Router from './router';
 import TasksPage from './pages/TasksPage';
 import TaskPage from './pages/TaskPage';
+import NotFoundPage from './pages/NotFoundPage';
 
 const App = () => {
   const routes = {
     '/': TasksPage,
     '/tasks/:id': TaskPage,
-    '*': () => <div>404</div>,
+    '*': () => <NotFoundPage />,
   };
 
   return <Router routes={routes} />;
