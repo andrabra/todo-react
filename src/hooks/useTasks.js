@@ -1,4 +1,5 @@
 import { useState, useRef, useCallback, useEffect, useMemo } from 'react';
+import tasksApi from '../api/tasksApi';
 
 const useTasks = () => {
   const [tasks, setTasks] = useState([]);
@@ -10,27 +11,33 @@ const useTasks = () => {
   const deleteAllTasks = useCallback(() => {
     const isConfirmed = confirm('Are you sure?');
     if (isConfirmed) {
-      setTasks([]);
+      tasksApi.deleteAll(tasks).then(() => {
+        setTasks([]);
+      });
     }
-  }, []);
+  }, [tasks]);
 
   const deleteTask = useCallback(
     (taskId) => {
-      setTasks(tasks.filter((task) => task.id !== taskId));
+      tasksApi.delete(taskId).then(() => {
+        setTasks(tasks.filter((task) => task.id !== taskId));
+      });
     },
     [tasks],
   );
 
   const toggleTaskComplete = useCallback(
     (taskId, isDone) => {
-      setTasks(
-        tasks.map((task) => {
-          if (task.id === taskId) {
-            return { ...task, isDone };
-          }
-          return task;
-        }),
-      );
+      tasksApi.toggleComplete(taskId, isDone).then((updatedTask) => {
+        setTasks(
+          tasks.map((task) => {
+            if (task.id === taskId) {
+              return updatedTask;
+            }
+            return task;
+          }),
+        );
+      });
     },
     [tasks],
   );
@@ -41,37 +48,19 @@ const useTasks = () => {
       isDone: false,
     };
 
-    fetch('http://localhost:3001/tasks', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(newTask),
-    })
-      .then((res) => res.json())
-      .then((newTask) => {
-        setTasks((prevTasks) => [...prevTasks, newTask]);
-        setNewTaskTitle('');
-        setSearchQuery('');
+    tasksApi.add(newTask).then((newTask) => {
+      setTasks((prevTasks) => [...prevTasks, newTask]);
+      setNewTaskTitle('');
+      setSearchQuery('');
 
-        newTaskInputRef.current.focus();
-      });
+      newTaskInputRef.current.focus();
+    });
   }, []);
 
   useEffect(() => {
     newTaskInputRef.current.focus();
 
-    // const fetchTasks = async () => {
-    //   const response = await fetch('http://localhost:3001/tasks');
-    //   const data = await response.json();
-    //   setTasks(data);
-    // };
-
-    // fetchTasks();
-
-    fetch('http://localhost:3001/tasks')
-      .then((response) => response.json())
-      .then(setTasks);
+    tasksApi.getAll().then(setTasks);
   }, []);
 
   const filteredTasks = useMemo(() => {
