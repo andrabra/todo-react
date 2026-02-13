@@ -4,11 +4,15 @@ import Field from './Field';
 import { TasksContext } from '../context/TasksContext';
 
 export const AddTaskForm = () => {
-  const { addTask, newTaskTitle, setNewTaskTitle, newTaskInputRef } = useContext(TasksContext);
+  const { addTask, newTaskTitle, setNewTaskTitle, newTaskInputRef } =
+    useContext(TasksContext);
+
+  const clearNewTaskTitle = newTaskTitle.trim();
+  const isNewTaskTitleEmpty = !clearNewTaskTitle.length;
 
   const onSubmit = (e) => {
     e.preventDefault();
-    addTask(e.target.value);
+    if (!isNewTaskTitleEmpty) addTask(clearNewTaskTitle);
   };
 
   const handleInputChange = (e) => {
@@ -25,7 +29,9 @@ export const AddTaskForm = () => {
         value={newTaskTitle}
         onInput={handleInputChange}
       />
-      <Button type='submit'>Add</Button>
+      <Button isDisabled={isNewTaskTitleEmpty} type='submit'>
+        Add
+      </Button>
     </form>
   );
 };
