@@ -6,9 +6,10 @@ export default function Field(props) {
     id,
     label,
     type = 'text',
-    onInput,
-    value,
     ref,
+    value,
+    error,
+    onInput,
   } = props;
 
   return (
@@ -18,7 +19,7 @@ export default function Field(props) {
       </label>
       <input
         onChange={onInput}
-        className='field__input'
+        className={`field__input ${error && 'is-invalid'}`}
         id={id}
         placeholder=' '
         autoComplete='off'
@@ -26,6 +27,11 @@ export default function Field(props) {
         value={value}
         ref={ref}
       />
+      {error && (
+        <span className='field__error' title={error}>
+          {error}
+        </span>
+      )}
     </div>
   );
 }
