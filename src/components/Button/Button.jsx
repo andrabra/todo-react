@@ -1,4 +1,4 @@
-import React from 'react';
+import styles from './Button.module.scss';
 
 export default function Button(props) {
   const {
@@ -11,7 +11,7 @@ export default function Button(props) {
 
   return (
     <button
-      className={`button ${className}`}
+      className={`${styles.button} ${className}`}
       type={type}
       disabled={isDisabled}
       onClick={onClick}

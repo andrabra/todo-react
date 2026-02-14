@@ -1,14 +1,14 @@
 .field {
   position: relative;
 
-  &:has(.field__input:not(:placeholder-shown)) .field__label {
+  &:has(.fieldInput:not(:placeholder-shown)) .fieldLabel {
     color: var(--color-black);
     scale: 0.7;
     translate: -1.75em -2.6em;
   }
 }
 
-.field__label {
+.fieldLabel {
   position: absolute;
   top: 50%;
   left: 17px;
@@ -16,7 +16,7 @@
   translate: 0 -50%;
 }
 
-.field__input {
+.fieldInput {
   --fieldInputPaddingX: 16px;
   --fieldSeachInputIconSize: 16px;
 
@@ -38,7 +38,7 @@
   }
 
   &[type='search'] {
-    &:placeholder-shown {
+    &:placeholdershown {
       padding-right: calc(
         var(--fieldInputPaddingX) * 2 + var(--fieldSeachInputIconSize)
       );
@@ -49,12 +49,12 @@
     }
   }
 
-  &.is-invalid {
+  &.isInvalid {
     border-color: var(--color-red);
   }
 }
 
-.field__error {
+.fieldError {
   position: absolute;
   top: 100%;
   left: 0;

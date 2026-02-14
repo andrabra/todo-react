@@ -1,4 +1,4 @@
-import React from 'react';
+import styles from './Field.module.scss';
 
 export default function Field(props) {
   const {
@@ -13,13 +13,13 @@ export default function Field(props) {
   } = props;
 
   return (
-    <div className={`field ${className}`}>
-      <label className='field__label' htmlFor={id}>
+    <div className={`${styles.field} ${className}`}>
+      <label className={styles.fieldLabel} htmlFor={id}>
         {label}
       </label>
       <input
         onChange={onInput}
-        className={`field__input ${error && 'is-invalid'}`}
+        className={`${styles.fieldInput} ${error && styles.isInvalid}`}
         id={id}
         placeholder=' '
         autoComplete='off'
@@ -28,7 +28,7 @@ export default function Field(props) {
         ref={ref}
       />
       {error && (
-        <span className='field__error' title={error}>
+        <span className={styles.fieldError} title={error}>
           {error}
         </span>
       )}

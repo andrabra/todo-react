@@ -12,23 +12,23 @@
   box-shadow: var(--box-shadow);
 }
 
-.todo__title {
+.todoTitle {
   text-align: center;
   font-size: 24px;
   font-weight: 600;
   line-height: 1.2;
 }
 
-.todo__form {
+.todoForm {
   display: flex;
   column-gap: 16px;
 }
 
-.todo__field {
+.todoField {
   width: 100%;
 }
 
-.todo__info {
+.todoInfo {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -36,7 +36,7 @@
   font-weight: 600;
 }
 
-.todo__delete-all-button {
+.todoDeleteAllButton {
   padding: 0;
   background-color: transparent;
   border: none;
@@ -46,21 +46,21 @@
   }
 }
 
-.todo__list,
-.todo__empty-message {
+.todoList,
+.todoEmptyMessage {
   &:empty {
     display: none;
   }
 }
 
-.todo__list {
+.todoList {
   --todoListRowGap: 8px;
 
   display: grid;
   row-gap: var(--todoListRowGap);
 }
 
-.todo__empty-message {
+.todoEmptyMessage {
   text-align: center;
   color: var(--color-gray-4);
 }

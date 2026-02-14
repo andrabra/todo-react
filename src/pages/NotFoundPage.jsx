@@ -1,5 +1,4 @@
-import React from 'react';
-import RouterLink from './../components/RouterLink';
+import RouterLink from './../components/RouterLink/RouterLink';
 
 const NotFoundPage = () => {
   return (
