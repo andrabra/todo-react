@@ -5,7 +5,8 @@ const RouterLink = (props) => {
 
   const handleClick = (e) => {
     e.preventDefault();
-    window.history.pushState({}, '', to);
+    const fullPath = `${BASE_URL}${to}`;
+    window.history.pushState({}, '', fullPath);
     window.dispatchEvent(new PopStateEvent('popstate'));
   };
 
