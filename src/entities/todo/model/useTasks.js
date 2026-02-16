@@ -1,8 +1,34 @@
-import {useState, useRef, useCallback, useEffect, useMemo} from 'react';
+import {useState, useRef, useCallback, useEffect, useMemo, useReducer} from 'react';
 import tasksApi from '@/shared/api/tasks/index.js';
 
+const tasksReducer = (state, action) => {
+  switch (action.type) {
+    case 'SET_ALL' : {
+      return Array.isArray(action.tasks) ? action.tasks : state;
+    }
+    case 'ADD' :
+      return [...state, action.task];
+    case 'TOGGLE_COMPLETE' : {
+      const {id, isDone} = action;
+
+      return state.map((task) => {
+        return task.id === id ? {...task, isDone} : task;
+      })
+    }
+
+    case 'DELETE' : {
+      return state.filter((task) => task.id !== action.id)
+    }
+    case 'DELETE_ALL' : {
+      return []
+    }
+    default:
+      return state;
+  }
+};
+
 const useTasks = () => {
-  const [tasks, setTasks] = useState([]);
+  const [tasks, dispatch] = useReducer(tasksReducer, []);
   const [newTaskTitle, setNewTaskTitle] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
   const [disappearingTaskId, setDisappearingTaskId] = useState(null);
@@ -14,7 +40,7 @@ const useTasks = () => {
     const isConfirmed = confirm('Are you sure?');
     if (isConfirmed) {
       tasksApi.deleteAll(tasks).then(() => {
-        setTasks([]);
+        dispatch({ type: 'DELETE_ALL' });
       });
     }
   }, [tasks]);
@@ -25,28 +51,21 @@ const useTasks = () => {
         setDisappearingTaskId(taskId);
 
         setTimeout(() => {
-          setTasks(tasks.filter((task) => task.id !== taskId));
+          dispatch({ type: 'DELETE', id: taskId })
           setDisappearingTaskId(null);
         }, 400);
       });
     },
-    [tasks],
+    [],
   );
 
   const toggleTaskComplete = useCallback(
     (taskId, isDone) => {
       tasksApi.toggleComplete(taskId, isDone).then((updatedTask) => {
-        setTasks(
-          tasks.map((task) => {
-            if (task.id === taskId) {
-              return updatedTask;
-            }
-            return task;
-          }),
-        );
+        dispatch({ type: 'TOGGLE_COMPLETE', id: taskId, isDone })
       });
     },
-    [tasks],
+    [],
   );
 
   const addTask = useCallback((title) => {
@@ -56,7 +75,7 @@ const useTasks = () => {
     };
 
     tasksApi.add(newTask).then((newTask) => {
-      setTasks((prevTasks) => [...prevTasks, newTask]);
+      dispatch({ type: 'ADD', task: newTask });
       setNewTaskTitle('');
       setSearchQuery('');
 
@@ -70,14 +89,16 @@ const useTasks = () => {
   useEffect(() => {
     newTaskInputRef.current.focus();
 
-    tasksApi.getAll().then(setTasks);
+    tasksApi.getAll().then((data) => {
+      dispatch({type: 'SET_ALL', tasks: data})
+    });
   }, []);
 
   const filteredTasks = useMemo(() => {
     const clearSearchQuery = searchQuery.trim().toLowerCase();
 
     return clearSearchQuery.length > 0
-      ? tasks.filter(({ title }) =>
+      ? tasks.filter(({title}) =>
         title.toLowerCase().includes(clearSearchQuery),
       )
       : null;
