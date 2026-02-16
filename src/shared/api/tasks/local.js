@@ -57,7 +57,13 @@ const localApi = {
 
   getById: async (id) => {
     await delay();
-    return read().find((task) => task.id === id) ?? null;
+    const task = read().find((task) => task.id === id);
+
+    if (!task) {
+      throw new Error('Task not found');
+    }
+
+    return task;
   },
 }
 
