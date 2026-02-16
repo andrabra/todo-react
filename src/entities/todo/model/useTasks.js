@@ -72,6 +72,7 @@ const useTasks = () => {
     const newTask = {
       title,
       isDone: false,
+      createdAt: new Date(),
     };
 
     tasksApi.add(newTask).then((newTask) => {
