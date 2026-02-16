@@ -5,7 +5,7 @@ import useIncompleteTaskScroll from './useIncompleteTaskScroll.js';
 export const TasksContext = createContext({});
 
 export const TasksProvider = (props) => {
-  const {children} = props;
+  const { children } = props;
 
   const {
     tasks,
@@ -13,8 +13,6 @@ export const TasksProvider = (props) => {
     deleteTask,
     toggleTaskComplete,
     deleteAllTasks,
-    newTaskTitle,
-    setNewTaskTitle,
     newTaskInputRef,
     searchQuery,
     setSearchQuery,
@@ -23,7 +21,7 @@ export const TasksProvider = (props) => {
     appearingTaskId,
   } = useTasks();
 
-  const {firstIncompleteTaskRef, firstIncompleteTaskId} =
+  const { firstIncompleteTaskRef, firstIncompleteTaskId } =
     useIncompleteTaskScroll(tasks);
 
   const value = useMemo(() => ({
@@ -32,8 +30,6 @@ export const TasksProvider = (props) => {
     deleteTask,
     toggleTaskComplete,
     deleteAllTasks,
-    newTaskTitle,
-    setNewTaskTitle,
     newTaskInputRef,
     searchQuery,
     setSearchQuery,
@@ -48,8 +44,6 @@ export const TasksProvider = (props) => {
     deleteTask,
     toggleTaskComplete,
     deleteAllTasks,
-    newTaskTitle,
-    setNewTaskTitle,
     newTaskInputRef,
     searchQuery,
     setSearchQuery,

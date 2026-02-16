@@ -9,10 +9,10 @@ const tasksReducer = (state, action) => {
     case 'ADD' :
       return [...state, action.task];
     case 'TOGGLE_COMPLETE' : {
-      const {id, isDone} = action;
+      const { id, isDone } = action;
 
       return state.map((task) => {
-        return task.id === id ? {...task, isDone} : task;
+        return task.id === id ? { ...task, isDone } : task;
       })
     }
 
@@ -29,7 +29,7 @@ const tasksReducer = (state, action) => {
 
 const useTasks = () => {
   const [tasks, dispatch] = useReducer(tasksReducer, []);
-  const [newTaskTitle, setNewTaskTitle] = useState('');
+
   const [searchQuery, setSearchQuery] = useState('');
   const [disappearingTaskId, setDisappearingTaskId] = useState(null);
   const [appearingTaskId, setAppearingTaskId] = useState(null);
@@ -68,7 +68,7 @@ const useTasks = () => {
     [],
   );
 
-  const addTask = useCallback((title) => {
+  const addTask = useCallback((title, callbackAfterAdding) => {
     const newTask = {
       title,
       isDone: false,
@@ -77,7 +77,11 @@ const useTasks = () => {
 
     tasksApi.add(newTask).then((newTask) => {
       dispatch({ type: 'ADD', task: newTask });
-      setNewTaskTitle('');
+
+      if (typeof callbackAfterAdding === 'function') {
+        callbackAfterAdding();
+      }
+
       setSearchQuery('');
 
       newTaskInputRef.current.focus();
@@ -91,7 +95,7 @@ const useTasks = () => {
     newTaskInputRef.current.focus();
 
     tasksApi.getAll().then((data) => {
-      dispatch({type: 'SET_ALL', tasks: data})
+      dispatch({ type: 'SET_ALL', tasks: data })
     });
   }, []);
 
@@ -99,7 +103,7 @@ const useTasks = () => {
     const clearSearchQuery = searchQuery.trim().toLowerCase();
 
     return clearSearchQuery.length > 0
-      ? tasks.filter(({title}) =>
+      ? tasks.filter(({ title }) =>
         title.toLowerCase().includes(clearSearchQuery),
       )
       : null;
@@ -107,8 +111,7 @@ const useTasks = () => {
 
   return {
     tasks,
-    newTaskTitle,
-    setNewTaskTitle,
+
     searchQuery,
     newTaskInputRef,
     deleteAllTasks,
