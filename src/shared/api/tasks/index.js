@@ -1,34 +1,7 @@
-const URL = 'http://localhost:3001/tasks';
-const headers = { 'Content-Type': 'application/json' };
+import localApi from "@/shared/api/tasks/local.js";
+import serverApi from "@/shared/api/tasks/server.js";
 
-const tasksApi = {
-  toJson: (data) => data.json(),
-
-  getAll: () => fetch(URL).then(tasksApi.toJson),
-
-  add: async (newTask) => {
-    return fetch(URL, {
-      method: 'POST',
-      headers,
-      body: JSON.stringify(newTask),
-    }).then(tasksApi.toJson);
-  },
-
-  delete: (taskId) =>
-    fetch(`${URL}/${taskId}`, {
-      method: 'DELETE',
-    }),
-
-  deleteAll: (tasks) => Promise.all(tasks.map(({ id }) => tasksApi.delete(id))),
-
-  toggleComplete: (taskId, isDone) =>
-    fetch(`${URL}/${taskId}`, {
-      method: 'PATCH',
-      headers,
-      body: JSON.stringify({ isDone }),
-    }).then(tasksApi.toJson),
-
-  getById: (taskId) => fetch(`${URL}/${taskId}`).then(tasksApi.toJson),
-};
+const isLocal = import.meta.env.VITE_STATIC_BACKEND === "true";
+const tasksApi = isLocal ? localApi : serverApi;
 
 export default tasksApi;
